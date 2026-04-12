@@ -1,0 +1,69 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.contactcenterlab</groupId> 
+	<artifactId>vxml-validation</artifactId>
+
+	<version>1.0.0</version>
+	<packaging>war</packaging>
+
+	<name>vxml-validation</name>
+
+	<build>
+		<finalName>${project.name}</finalName>
+		<plugins>	
+		
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>xml-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>validate</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<validationSets>
+
+						<!-- VXML validation -->
+						<validationSet>
+							<dir>Webroot/vxml</dir>
+							<validating>true</validating>
+						</validationSet>
+
+						<!-- GRXML validation -->
+						<validationSet>
+							<dir>Webroot/grxml</dir>
+							<validating>true</validating>
+						</validationSet>
+						
+					</validationSets>
+					<catalogs>
+						<catalog>validation/catalog.xml</catalog>
+					</catalogs>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>com.github.searls</groupId>
+				<artifactId>jasmine-maven-plugin</artifactId>
+				<version>2.2</version>				
+				<executions>
+					<execution>
+						<goals>
+							<goal>test</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<jsSrcDir>${project.basedir}/Webroot/scripts</jsSrcDir>
+					<jsTestSrcDir>${project.basedir}/Webroot/scripts/test</jsTestSrcDir>
+				</configuration>
+			</plugin>
+			
+		</plugins>
+	</build>
+	
+</project>
