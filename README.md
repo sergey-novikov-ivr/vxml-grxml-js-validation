@@ -1,5 +1,12 @@
 # VXML / GRXML Validation Sample (Maven)
 
+There are a few problems for large and complicated IVR applications written in pure VoiceXML with integrations:
+
+- No proper unit testing – requires a full runtime (voice platform) to test
+- Limited debugging tools – no simple way to test the application locally on a desktop/laptop
+- Difficult automation – end-to-end testing requires telephony simulation
+- Easy to make mistakes in GRXML/VXML – verbose XML syntax, weak validation, and small errors (e.g., missing tags, incorrect grammar rules) can break the flow at runtime
+
 This project is a simple proof-of-concept demonstrating:
 
 - Static validation of VoiceXML (VXML)
@@ -32,16 +39,31 @@ The goal of this project is to provide a lightweight validation pipeline for:
 
 ## 📁 Project Structure
 
-.
-├── pom.xml
-├── Webroot/
-│   ├── vxml/        # VoiceXML files
-│   └── grxml/       # SRGS grammar files
-├── validation/
-│   ├── catalog.xml  # XML catalog
-│   ├── vxml.dtd     # VoiceXML DTD
-│   └── grammar.xsd  # SRGS schema
-└── src/             # JS test sources (if applicable)
+```
+T:.
+|   pom.xml                 # Maven configuration
+|                     
++---validation
+|       catalog.xml         # XML catalog
+|       grammar.dtd
+|       grammar.xsd         # SRGS schema
+|       vxml.dtd            # VoiceXML DTD
+|       vxml.xsd
+|       
+\---Webroot
+    +---grxml                # SRGS grammar files
+    |       hello.grxml
+    |       
+    +---scripts              
+    |   |   script.js
+    |   |   
+    |   \---test             # Test source
+    |           tests.js
+    |           
+    \---vxml                 # VoiceXML files
+            root.vxml
+            start.vxml
+```            
 
 ---
 
@@ -72,26 +94,13 @@ Basic unit tests are executed using Jasmine with a headless browser.
 
 ## ▶️ How to Run
 
-mvn clean install
+mvn test
 
 This will:
-1. Validate XML files
-2. Run JavaScript tests
+1. Validate VXML files
+2. Validate GRXML files
+3. Run JavaScript tests
 
----
-
-## ⚠️ Notes
-
-- Uses legacy tools (PhantomJS, Selenium 2.x)
-- May show warnings on modern Java versions
-- Validation still works correctly
-
----
-
-## 🔒 Security Considerations
-
-- External entity loading disabled via XML catalog
-- Prevents XXE attacks and external dependencies
 
 ---
 
@@ -106,7 +115,6 @@ This will:
 ## 📦 Purpose
 
 This project is preserved as a reference implementation.
-
 No further development is planned.
 
 ---
