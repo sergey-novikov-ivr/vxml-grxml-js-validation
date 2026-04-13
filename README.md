@@ -40,7 +40,6 @@ The goal of this project is to provide a lightweight validation pipeline for:
 ## 📁 Project Structure
 
 ```
-T:.
 |   pom.xml                 # Maven configuration
 |                     
 +---validation
